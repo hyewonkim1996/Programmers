@@ -1,0 +1,75 @@
+ public int solution(int p, int q, int r, int l) {
+        int answer = 0;
+        int temp=0;
+		    //for문 돌리기 위해 네가지 숫자를 배열에 저장
+		    int[] dice = {p,q,r,l};
+		    //같은 경우가 몇가지인지 셀 변수
+		    int cnt = 0;
+		    //for문으로 네 숫자가 서로 같은지 모두 비교
+		    //네가지 수 모두 다를 경우 가장 작은 수 구하기
+		    for(int i=1; i<4; i++){
+		        for(int j=0; j<i; j++){
+		            if(dice[j] == dice[i]){
+		                cnt++;
+		            }else if(dice[j] != dice[i]){
+		                temp = q; //이전에 나온 다른 수
+		                q=dice[i];//새로 나온 다른 수
+		                if(temp != q){//이전에 나온 수와 새로 나온 수가 다름 == 세번째로 다른 수
+		                    r = q;
+		                }
+		            }
+		        }
+		    }
+		    //네가지수 모두 같은 경우
+		    if(cnt==6){
+		        answer = 1111*p;
+		    }else if(cnt==3){
+		        answer = (10*p+q)*(10*p+q);
+		    }else if(cnt==2){
+		        if(p-q<0){
+		            answer = (p+q)*((p-q)*-1);
+		        }else{
+		            answer = (p+q)*(p-q);
+		        }
+		        
+		    }else if(cnt==1){
+		        answer = q*r;
+		    }else{
+		        temp=dice[0];
+		         for(int i=1; i<4; i++){
+		        for(int j=0; j<i; j++){
+		            if(dice[i]<dice[j]){
+		                temp=dice[i];
+		            }
+		            }
+		         }
+		        answer=temp;
+		    }
+        return answer;
+    }
+}
+
+
+//정답
+int[] dice = { a, b, c, d };
+        Arrays.sort(dice);
+
+        int ans = 0;
+
+        if (dice[0] == dice[3]) {
+            ans = 1111 * dice[3];
+        } else if (dice[0] == dice[2] || dice[1] == dice[3]) {
+            ans = (int) Math.pow(dice[1] * 10 + (dice[0] + dice[3] - dice[1]), 2);
+        } else if (dice[0] == dice[1] && dice[2] == dice[3]) {
+            ans = (dice[0] + dice[3]) * (dice[3] - dice[0]);
+        } else if (dice[0] == dice[1]) {
+            ans = dice[2] * dice[3];
+        } else if (dice[1] == dice[2]) {
+            ans = dice[0] * dice[3];
+        } else if (dice[2] == dice[3]) {
+            ans = dice[0] * dice[1];
+        } else {
+            ans = dice[0];
+        }
+
+        return ans;
